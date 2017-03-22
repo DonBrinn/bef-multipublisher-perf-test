@@ -35,11 +35,8 @@ Two lambda functions to simulate multiple Telegraphs publishing at the same time
 
 `auth-token`: An OAuth2 token.  You can get a token from http://backdoor.tools.d2l/, using the same TenantId that you specify above and using the same Authentication Service Endpoint that your BEF is using.  This requires that the BEF is using one of the "dev" auth services, not a production auth service.
 
-### Invoking in AWS (recommended for perf testing)
+### Invoking in AWS
 Invoke it directly from the AWS UI Console, giving it an event with the format specified above.
-
-### Running locally on your machine (option for debugging or testing changes to this script):
-Modify the `testInput` variable in the `telegraph-simulator.js` script, then call `node src\telegraph-simulator.js`.
 
 ## telegraph-simulator-controller Lambda function
 `telegraph-simulator-controller` is a lambda function that simulates multiple Telegraph instances running concurrently.  It does this by invoking the `telegraph-simulator` lambda multiple times asynchronously
@@ -54,10 +51,5 @@ Modify the `testInput` variable in the `telegraph-simulator.js` script, then cal
 
 `number-of-telegraphs`: The number of `telegraph-simulator` lambdas to be invoked to run concurrently.  Each of those `telegraph-simulator` lambdas will be invoked with the identical "telgraph-config", meaning they will all publish the same number and rate of events for the same tenant ID to the same BEF endpoint.
 
-### Invoking in AWS (recommended for perf testing)
+### Invoking in AWS
 Invoke it directly from the AWS UI Console, giving it an event with the format specified above.
-
-### Running locally on your machine (option for debugging or testing changes to this script):
-Modify the `testInput` variable in the `telegraph-simulator-controller.js` script, then call `node src\telegraph-simulator-controller.js`.
-
-Note: Running the `telegraph-simulator-controller` lambda locally or in AWS requires that the `telegraph-simulator` lambda is deployed to AWS.
