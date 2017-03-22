@@ -1,0 +1,30 @@
+{
+  "name": "@d2l/bef-multipublisher-perf-test",
+  "version": "1.0.1",
+  "description": "BEF Multi-publisher performance tester",
+  "main": "src/publisher.js",
+  "author": "D2L",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "4.3.2"
+  },
+  "scripts": {
+    "remove": "sls remove",
+    "deploy": "sls deploy --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Brightspace/event-flow-bus.git"
+  },
+  "dependencies": {
+    "serverless": "1.6.0",
+    "node-uuid": "1.4.7",
+    "request": "2.81.0",
+    "request-promise-native": "1.0.3",
+    "serverless-plugin-include-dependencies": "^1.2.3",
+    "serverless-plugin-lambda-account-access": "^1.0.2"
+  },
+  "devDependencies": {
+    "aws-sdk": "2.30.0"
+  }
+}

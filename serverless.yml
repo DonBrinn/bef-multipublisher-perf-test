@@ -1,0 +1,52 @@
+﻿service: bef-multipublisher-perf-test
+
+custom:
+  defaultRegion: us-west-2
+  telegraphSimulatorFunctionName: bef-multipublisher-perf-test-telegraph-simulator-${self:provider.stage}
+
+plugins:
+  - serverless-plugin-include-dependencies
+  - serverless-plugin-lambda-account-access
+
+package:
+  exclude:
+    - '**/*'
+  include:
+    - 'src/*'
+
+provider:
+  name: aws
+  region: ${opt:region, env:AWS_DEFAULT_REGION, self:custom.defaultRegion}
+  runtime: nodejs4.3
+  stage: ${opt:stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: arn:aws:lambda:us-west-2:*:function:${self:custom.telegraphSimulatorFunctionName}
+
+functions:
+  telegraphSimulator:
+    handler: src/telegraph-simulator.handler
+    name: ${self:custom.telegraphSimulatorFunctionName}
+    memorySize: 512
+    timeout: 300
+
+  telegraphSimulatorController:
+    handler: src/telegraph-simulator-controller.handler
+    name: bef-multipublisher-perf-test-telegraph-simulator-controller-${self:provider.stage}
+    memorySize: 512
+    timeout: 300
+    environment:
+      TelegraphSimulatorFunctionName: ${self:custom.telegraphSimulatorFunctionName}
+
+resources:
+  Resources:
+    TelegraphSimulatorLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        RetentionInDays: "3"
+    TelegraphSimulatorControllerLogGroup:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        RetentionInDays: "3"
