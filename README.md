@@ -59,3 +59,5 @@ Invoke it directly from the AWS UI Console, giving it an event with the format s
 
 ### Running locally on your machine (option for debugging or testing changes to this script):
 Modify the `testInput` variable in the `telegraph-simulator-controller.js` script, then call `node src\telegraph-simulator-controller.js`.
+
+Note: Running the `telegraph-simulator-controller` lambda locally or in AWS requires that the `telegraph-simulator` lambda is deployed to AWS.
