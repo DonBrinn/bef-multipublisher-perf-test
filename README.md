@@ -5,6 +5,7 @@ Two lambda functions to simulate multiple Telegraphs publishing at the same time
 
 ## Deploying Lambdas to AWS
 `npm install`
+
 `serverless --stage <environment name> --region <aws region> deploy`
 
 ## Clean Up
