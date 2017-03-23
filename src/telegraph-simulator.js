@@ -15,7 +15,7 @@ function simulateTelegraph(input, callback, errorCounts, successCount, hasError,
     callback("invalid number-of-batches specified", batchLimit);
     return;
   }
-  publishMessage(input["bef-gateway-endpoint"], input["auth-token"], input["tenant-id"], errorCategory => {
+  publishMessage(input["bef-gateway-endpoint"], input["auth-token"], input["tenant-id"], input["events-per-batch"], errorCategory => {
     if (errorCategory) {
       hasError = true;
       if (errorCounts[errorCategory]) {
@@ -41,16 +41,21 @@ function simulateTelegraph(input, callback, errorCounts, successCount, hasError,
     });
 }
 
-function publishMessage(endpoint, authToken, tenantId, callback) {
+function publishMessage(endpoint, authToken, tenantId, numEvents, callback) {
+  var events = [];
+  for (var i = 0; i < numEvents; i++) {
+    var event = {
+      EventType: "UserInteractionEvent",
+      EventId: uuid.v4(),
+      TenantId: tenantId
+    };
+    events.push(event);
+  }
+
   var payload = {
-    Events: [
-      {
-        EventType: "UserInteractionEvent",
-        EventId: uuid.v4(),
-        TenantId: tenantId
-      }
-    ]
+    Events: events
   };
+
   return request.post(
     endpoint,
     {

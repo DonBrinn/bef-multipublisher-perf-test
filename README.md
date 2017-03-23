@@ -18,6 +18,7 @@ Two lambda functions to simulate multiple Telegraphs publishing at the same time
 ```
 {
   "number-of-batches": 2,
+  "events-per-batch": 1,
   "wait-between-batches-ms": 100,
   "bef-gateway-endpoint": "https://qgoew2yfl8.execute-api.us-west-2.amazonaws.com/donb/brightspace",
   "tenant-id": "71674496-23f5-4457-94ed-ac87c761b817",
@@ -25,7 +26,9 @@ Two lambda functions to simulate multiple Telegraphs publishing at the same time
 }
 ```
 
-`number-of-batches`: The number of batches that the "Telegraph" will publish to the BEF each time this Lambda is invoked.  Each batch will comprise only 1 event.  Each event published by a single Lambda instance is identical except for the EventID, which is unique for each event.
+`number-of-batches`: The number of batches that the "Telegraph" will publish to the BEF each time this Lambda is invoked.  Each batch will comprise 1 or more events.
+
+`events-per-batch`: The number of events in each batch. Each event in each batch published by a single Lambda instance is identical except for the EventID, which is unique for each event.
 
 `wait-between-batches-ms`: The time, in milliseconds, that the "Telegraph" will sleep between sending each batch.  I have found that, in AWS, a wait time of 180 ms works out to about 3 events per second.  If you want a different rate, you should try invoking the Lambda with a large number of batches (say, 1 minute's worth at your desired rate) and, through trial and error, dial in the wait time that gives you the desired rate.
 
