@@ -27,7 +27,7 @@ Two lambda functions to simulate multiple Telegraphs publishing at the same time
 
 `number-of-batches`: The number of batches that the "Telegraph" will publish to the BEF each time this Lambda is invoked.  Each batch will comprise only 1 event.  Each event published by a single Lambda instance is identical except for the EventID, which is unique for each event.
 
-`wait-between-batches-ms`: The time, in milliseconds, that the "Telegraph" will sleep between sending each batch.  I have found that, in AWS, a wait time of 100 ms works out to about 3 events per second.  If you want a different rate, you should try invoking the Lambda with a large number of batches (say, 1 minute's worth at your desired rate) and, through trial and error, dial in the wait time that gives you the desired rate.
+`wait-between-batches-ms`: The time, in milliseconds, that the "Telegraph" will sleep between sending each batch.  I have found that, in AWS, a wait time of 180 ms works out to about 3 events per second.  If you want a different rate, you should try invoking the Lambda with a large number of batches (say, 1 minute's worth at your desired rate) and, through trial and error, dial in the wait time that gives you the desired rate.
 
 `bef-gateway-endpoint`: The URL to publish to an actual BEF stack that has already been deployed.
 
